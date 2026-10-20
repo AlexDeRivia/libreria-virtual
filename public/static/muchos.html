@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Libros</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS personalizado para los checkboxes -->
+    <style>
+        .checkbox-list {
+            border: 1px solid #ccc;
+            padding: 5px;
+            max-height: 150px;
+            /* Ajusta la altura máxima según sea necesario */
+            overflow-y: auto;
+        }
+
+        .checkbox {
+            margin-bottom: 5px;
+        }
+
+        .checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox label {
+            display: block;
+            position: relative;
+            padding-left: 25px;
+            cursor: pointer;
+        }
+
+        .checkbox label:before {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            position: absolute;
+            left: 0;
+            bottom: 1px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .checkbox input[type="checkbox"]:checked+label:before {
+            content: "\2713";
+            font-size: 14px;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Registro de Libros</h1>
+        <form>
+            <div class="form-group">
+                <label for="titulo">Título del Libro:</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" required>
+            </div>
+            <div class="form-group">
+                <label for="autores">Autores:</label>
+                <div class="checkbox-list">
+                    <!-- Aquí puedes cargar dinámicamente los autores desde tu base de datos -->
+                    <div class="checkbox">
+                        <input type="checkbox" id="autor1" name="autores[]" value="1">
+                        <label for="autor1">Autor 1</label>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" id="autor2" name="autores[]" value="2">
+                        <label for="autor2">Autor 2</label>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" id="autor3" name="autores[]" value="3">
+                        <label for="autor3">Autor 3</label>
+                    </div>
+                    <!-- Agrega más checkboxes según sea necesario -->
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar Libro</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

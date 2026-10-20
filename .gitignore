@@ -1,0 +1,27 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/public/img/
+/storage/*.key
+/vendor
+.env
+.env.*
+!.env.example
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+# Bocetos SQL antiguos; no forman parte de las migraciones y pueden contener datos de ejemplo.
+/database/gpt.sql
+/database/unprepared.sql
+/database/salidas.sql
