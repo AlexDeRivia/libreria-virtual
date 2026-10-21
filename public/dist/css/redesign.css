@@ -199,8 +199,9 @@ dl.row dd { font-weight: 600; }
 .demo-role-number { color: var(--teal); font-size: .8rem; font-weight: 800; letter-spacing: .12em; margin-bottom: .7rem; }
 .demo-role-card h3 { font-size: 1.2rem; line-height: 1.25; margin-bottom: .7rem; }
 .demo-role-card p { color: var(--muted); font-size: .94rem; flex: 1; }
-.demo-role-card form { margin-top: auto; }
-.demo-role-card .btn { width: 100%; white-space: normal; }
+.demo-role-card form { min-width: 0; margin-top: auto; }
+.demo-role-card .btn { width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.auth-shell .demo-role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .demo-access-compact { margin: 1rem 0 0; padding: 1rem 1.2rem; }
 .demo-access-compact .demo-access-heading { max-width: none; margin-bottom: .85rem; }
 .demo-access-compact .demo-access-heading h2 { font-size: 1.05rem; margin: 0; }
@@ -210,7 +211,7 @@ dl.row dd { font-weight: 600; }
 .demo-access-compact .demo-role-number, .demo-access-compact .demo-role-card h3 { display: none; }
 .demo-access-compact .demo-role-card .btn { font-size: .85rem; padding: .4rem .5rem; }
 @media (max-width: 991.98px) { .demo-role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 575.98px) { .demo-role-grid { grid-template-columns: 1fr; } .demo-access-compact .demo-role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 575.98px) { .demo-role-grid, .auth-shell .demo-role-grid { grid-template-columns: 1fr; } .demo-access-compact .demo-role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Back office */
 .sb-nav-fixed { background: var(--mist); }

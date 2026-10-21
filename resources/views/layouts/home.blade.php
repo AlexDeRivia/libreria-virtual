@@ -9,7 +9,7 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('dist/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/bootstrap/icons/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/css/redesign.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/redesign.css') }}?v=20261021">
 </head>
 
 <body class="@yield('back')">

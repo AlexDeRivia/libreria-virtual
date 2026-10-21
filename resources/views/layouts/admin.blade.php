@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('dist/css/datatables.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/css/redesign.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/redesign.css') }}?v=20261021">
 </head>
 
 <body class="sb-nav-fixed">
