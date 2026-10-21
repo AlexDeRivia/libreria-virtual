@@ -49,7 +49,7 @@ php artisan view:cache
 
 Comprueba `/`, `/catalogo`, el acceso de un clic a cada rol, carrito, confirmación de pedido y seguimiento. En el modo público el registro queda desactivado y el panel de administrador es compartido; usa solo datos ficticios. `demo:reset` borra los cambios en la base desechable indicada por `DEMO_RESET_DATABASE` y falla si detecta cuentas ajenas a las cinco sembradas. Comprueba las cuentas antes de ejecutarlo por primera vez.
 
-En **Avanzado > Tareas programadas** de alwaysdata, crea una tarea de tipo **Comando**, con `php /home/libreria-virtual/libreria-virtual/artisan demo:reset`, frecuencia diaria en una hora de poco tráfico (por ejemplo 09:00 UTC, 04:00 de Lima). Comprueba que el primer registro de ejecución termine correctamente en los logs de la tarea. alwaysdata admite comandos y horarios diarios en ese panel: [documentación oficial](https://help.alwaysdata.com/en/docs/web-hosting/tasks/). Si el restablecimiento falla, revisa el log; no vuelvas a sembrar a mano la base existente.
+En **Avanzado > Tareas programadas** de alwaysdata, crea una tarea de tipo **Comando**, con `php /home/libreria-virtual/libreria-virtual/artisan demo:reset`, frecuencia diaria a las 10:30 del servidor (CEST/CET; aproximadamente 03:30/04:30 en Lima, según la temporada). Comprueba que el primer registro de ejecución termine correctamente en los logs de la tarea. alwaysdata admite comandos y horarios diarios en ese panel: [documentación oficial](https://help.alwaysdata.com/en/docs/web-hosting/tasks/). Si el restablecimiento falla, revisa el log; no vuelvas a sembrar a mano la base existente.
 
 ## Renombrado de la cuenta existente
 

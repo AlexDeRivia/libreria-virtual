@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
         $this->call(LibroEspecialidadSeeder::class);
         $this->call(LibroAutorSeeder::class);
         $this->call(EjemplarSeeder::class);
+        if (config('demo.public_access')) {
+            $this->call(PublicDemoOrderSeeder::class);
+        }
 
         // \App\Models\User::factory(10)->create();
 

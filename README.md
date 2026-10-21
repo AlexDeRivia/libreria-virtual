@@ -4,7 +4,7 @@ Demo interactiva en Laravel para administrar libros y ejemplares, registrar pedi
 
 **Demo pública:** [libreria-virtual.alwaysdata.net](https://libreria-virtual.alwaysdata.net/) · **Código:** [GitHub](https://github.com/AlexDeRivia/libreria-virtual).
 
-En la demo pública, «Explorar roles» permite entrar con un clic como cliente, cliente especializado, encargado de envíos o administrador. Se puede cambiar de rol dentro de cada panel. Todos comparten datos ficticios: los cambios se restablecen cada día. No introduzcas información personal real.
+En la demo pública, «Explorar roles» permite entrar con un clic como cliente, cliente especializado, encargado de envíos o administrador. Se puede cambiar de rol dentro de cada panel. Hay un pedido de muestra listo para consultar y despachar. Todos comparten datos ficticios: los cambios se restablecen cada día. No introduzcas información personal real.
 
 **La compra y el envío son simulados.** Confirmar un pedido calcula el costo de envío y crea un código de seguimiento interno; no cobra dinero ni se integra con un transportista. El botón «1 Clic» añade ejemplares al carrito. La demo no solicita ni guarda datos de tarjetas nuevas.
 
