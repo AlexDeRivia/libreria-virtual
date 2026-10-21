@@ -2,7 +2,7 @@
 @section('title', 'Ingresar · Librería Virtual')
 @section('content')
 <div class="container auth-shell">
-    <div class="page-heading"><div><p class="eyebrow mb-2">Tu cuenta</p><h1>{{ config('demo.public_access') ? 'Elige cómo explorar la demo' : 'Ingresa a tu biblioteca' }}</h1><p>{{ config('demo.public_access') ? 'Prueba cada área de la aplicación sin crear una cuenta.' : 'Continúa tu pedido o revisa el seguimiento de tus compras simuladas.' }}</p></div></div>
+    <div class="page-heading"><div><p class="eyebrow mb-2">{{ config('demo.public_access') ? 'Demo interactiva' : 'Tu cuenta' }}</p><h1>{{ config('demo.public_access') ? 'Elige cómo explorar la demo' : 'Ingresa a tu biblioteca' }}</h1><p>{{ config('demo.public_access') ? 'Prueba cada área de la aplicación sin crear una cuenta.' : 'Continúa tu pedido o revisa el seguimiento de tus compras simuladas.' }}</p></div></div>
     @if (config('demo.public_access'))
         @include('partials.shared.demo-roles')
     @else

@@ -1,6 +1,6 @@
 # Despliegue en alwaysdata Free
 
-Destino: cuenta `libreria-virtual`, sitio [libreria-virtual.alwaysdata.net](https://libreria-virtual.alwaysdata.net/), base `libreria-virtual_libreria_virtual` (MariaDB 11.8). Las migraciones, incluidos los procedimientos, las vistas y el disparador, se ejecutaron correctamente en este servidor.
+Destino: cuenta `libreria-virtual`, sitio [libreria-virtual.alwaysdata.net](https://libreria-virtual.alwaysdata.net/), base pública desechable `libreria-virtual_portfolio_demo` (MariaDB 11.8). La base anterior `libreria-virtual_libreria_virtual` se conserva aparte porque contiene una cuenta y pedidos ajenos a las semillas ficticias.
 
 ## Archivos
 
@@ -20,7 +20,7 @@ APP_URL=https://libreria-virtual.alwaysdata.net
 DB_CONNECTION=mysql
 DB_HOST=mysql-libreria-virtual.alwaysdata.net
 DB_PORT=3306
-DB_DATABASE=libreria-virtual_libreria_virtual
+DB_DATABASE=libreria-virtual_portfolio_demo
 DB_USERNAME=libreria-virtual
 DB_PASSWORD=<contraseña privada de la base>
 SESSION_SECURE_COOKIE=true
@@ -29,7 +29,7 @@ SESSION_DRIVER=file
 QUEUE_CONNECTION=sync
 MAIL_MAILER=log
 PUBLIC_DEMO_ACCESS=true
-DEMO_RESET_DATABASE=libreria-virtual_libreria_virtual
+DEMO_RESET_DATABASE=libreria-virtual_portfolio_demo
 ```
 
 Genera `APP_KEY` con `php artisan key:generate`. Para la siembra inicial, pasa `DEMO_PASSWORD` como variable temporal del proceso y retírala de la sesión al terminar. No la guardes en el `.env` ni en el historial de comandos. No publiques ni compartas el `.env`.
@@ -53,7 +53,7 @@ En **Avanzado > Tareas programadas** de alwaysdata, crea una tarea de tipo **Com
 
 ## Renombrado de la cuenta existente
 
-La cuenta se renombró de `alex-portfolio` a `libreria-virtual`. alwaysdata trasladó la raíz web y renombró la base y su usuario. Después se actualizaron las cuatro variables de URL y base de datos indicadas arriba en el `.env` privado, se reconstruyeron las cachés de Laravel y se reinició el sitio desde el panel.
+La cuenta se renombró de `alex-portfolio` a `libreria-virtual`. alwaysdata trasladó la raíz web y renombró la base y su usuario. Después se actualizaron la URL y los datos de conexión en el `.env` privado, se reconstruyeron las cachés de Laravel y se reinició el sitio desde el panel. Para abrir los roles al público se creó posteriormente una base nueva y exclusiva para la demo.
 
 MariaDB conservó el usuario anterior como `DEFINER` de las vistas, procedimientos y el disparador. Para restaurar el catálogo y los pedidos sin borrar los datos, se ejecutaron de nuevo los métodos `up()` de `2024_02_07_240000_unprepared_view.php`, `2026_10_19_000000_add_usuario_to_view_pedidos.php`, `2024_02_07_240000_unprepared_procedure.php` y `2024_02_07_240000_unprepared_trigger.php`, en ese orden. Sus definidores ahora son `libreria-virtual@%`. No vuelvas a sembrar la base existente por este cambio.
 
