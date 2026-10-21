@@ -1,6 +1,6 @@
 # Despliegue en alwaysdata Free
 
-Destino: cuenta `alex-portfolio`, sitio `alex-portfolio.alwaysdata.net`, base nueva `alex-portfolio_libreria_virtual` (MariaDB 11.8). Esta versión de MariaDB requiere comprobar todas las migraciones y el flujo de compra antes de anunciar la demo.
+Destino: cuenta `alex-portfolio`, sitio [alex-portfolio.alwaysdata.net](https://alex-portfolio.alwaysdata.net/), base `alex-portfolio_libreria_virtual` (MariaDB 11.8). Las migraciones, incluidos los procedimientos, las vistas y el disparador, se ejecutaron correctamente en este servidor.
 
 ## Archivos
 
@@ -28,15 +28,18 @@ CACHE_DRIVER=file
 SESSION_DRIVER=file
 QUEUE_CONNECTION=sync
 MAIL_MAILER=log
-DEMO_PASSWORD=<contraseña privada de 12+ caracteres para sembrar>
 ```
 
-Genera `APP_KEY` con `php artisan key:generate`. Usa `DEMO_PASSWORD` solo para la siembra inicial y después retírala del `.env`. No publiques ni compartas el `.env`.
+Genera `APP_KEY` con `php artisan key:generate`. Para la siembra inicial, pasa `DEMO_PASSWORD` como variable temporal del proceso y retírala de la sesión al terminar. No la guardes en el `.env` ni en el historial de comandos. No publiques ni compartas el `.env`.
 
 ## Inicialización y comprobación
 
 ```sh
-php artisan migrate --seed --force
+php artisan migrate --force
+# Ejecuta la siembra una sola vez con una clave de 12+ caracteres.
+read -r -s -p 'Clave demo: ' demo_pass
+DEMO_PASSWORD="$demo_pass" php artisan db:seed --force
+unset demo_pass
 php artisan optimize:clear
 php artisan config:cache
 php artisan view:cache

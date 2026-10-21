@@ -2,6 +2,8 @@
 
 Demo interactiva en Laravel para administrar libros y ejemplares, registrar pedidos y simular el seguimiento de envíos. Hay cuatro roles: administrador, cliente ocasional, cliente especializado y encargado de envíos. El catálogo público se puede explorar sin cuenta.
 
+**Demo pública:** [alex-portfolio.alwaysdata.net](https://alex-portfolio.alwaysdata.net/) · **Código:** [GitHub](https://github.com/AlexDeRivia/libreria-virtual).
+
 © 2026 Alex Alcantara. El código y diseño originales se publican con todos los derechos reservados; consulta [COPYRIGHT.md](COPYRIGHT.md). Las dependencias y componentes de terceros conservan sus propias licencias.
 
 **La compra y el envío son simulados.** Confirmar un pedido calcula el costo de envío y crea un código de seguimiento interno; no cobra dinero ni se integra con un transportista. El botón «1 Clic» añade ejemplares al carrito. La demo no solicita ni guarda datos de tarjetas nuevas.
@@ -10,7 +12,7 @@ Demo interactiva en Laravel para administrar libros y ejemplares, registrar pedi
 
 - PHP 8.2 o superior, con `pdo_mysql`, `mbstring`, `openssl`, `fileinfo` y las extensiones habituales de Laravel.
 - Composer 2.
-- MySQL 8.0.30 o compatible. Las migraciones crean vistas, procedimientos y un disparador, así que el usuario de instalación necesita esos permisos.
+- MySQL 8.0.30 o MariaDB 11.8. Las migraciones crean vistas, procedimientos y un disparador, así que el usuario de instalación necesita esos permisos.
 - Un servidor PHP que sirva **solo** la carpeta `public/` como raíz web.
 
 Las vistas usan los archivos CSS y JS incluidos en `public/dist`. Node y Vite no son necesarios para arrancar esta demo.
