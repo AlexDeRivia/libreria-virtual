@@ -1,12 +1,12 @@
 # Despliegue en alwaysdata Free
 
-Destino: cuenta `alex-portfolio`, sitio [alex-portfolio.alwaysdata.net](https://alex-portfolio.alwaysdata.net/), base `alex-portfolio_libreria_virtual` (MariaDB 11.8). Las migraciones, incluidos los procedimientos, las vistas y el disparador, se ejecutaron correctamente en este servidor.
+Destino: cuenta `libreria-virtual`, sitio [libreria-virtual.alwaysdata.net](https://libreria-virtual.alwaysdata.net/), base `libreria-virtual_libreria_virtual` (MariaDB 11.8). Las migraciones, incluidos los procedimientos, las vistas y el disparador, se ejecutaron correctamente en este servidor.
 
 ## Archivos
 
 1. Sube solo el código del repositorio. No subas `.env`, `vendor/`, sesiones, caché, logs, SQL heredado ni imágenes antiguas sin licencia comprobada.
-2. En `/home/alex-portfolio/libreria-virtual`, instala dependencias con `composer install --no-dev --optimize-autoloader --no-interaction`.
-3. Configura la raíz del sitio PHP en `/home/alex-portfolio/libreria-virtual/public` y PHP 8.2 o superior. El resto del proyecto debe quedar fuera de la raíz pública.
+2. En `/home/libreria-virtual/libreria-virtual`, instala dependencias con `composer install --no-dev --optimize-autoloader --no-interaction`.
+3. Configura la raíz del sitio PHP en `/home/libreria-virtual/libreria-virtual/public` y PHP 8.2 o superior. El resto del proyecto debe quedar fuera de la raíz pública.
 
 ## Configuración privada
 
@@ -16,12 +16,12 @@ Crea un `.env` nuevo en el servidor a partir de `.env.example`, con al menos:
 APP_NAME="Libreria Virtual"
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://alex-portfolio.alwaysdata.net
+APP_URL=https://libreria-virtual.alwaysdata.net
 DB_CONNECTION=mysql
-DB_HOST=mysql-alex-portfolio.alwaysdata.net
+DB_HOST=mysql-libreria-virtual.alwaysdata.net
 DB_PORT=3306
-DB_DATABASE=alex-portfolio_libreria_virtual
-DB_USERNAME=alex-portfolio
+DB_DATABASE=libreria-virtual_libreria_virtual
+DB_USERNAME=libreria-virtual
 DB_PASSWORD=<contraseña privada de la base>
 SESSION_SECURE_COOKIE=true
 CACHE_DRIVER=file
@@ -46,5 +46,11 @@ php artisan view:cache
 ```
 
 Comprueba `/`, `/catalogo`, registro de cliente, carrito, confirmación de pedido y seguimiento; entra a los roles internos solo con credenciales privadas. La demo permite que visitantes creen datos ficticios. Reinicia o limpia los pedidos de la demo de forma deliberada si se acumulan; nunca ejecutes `migrate:fresh` sobre una base con datos que debas conservar.
+
+## Renombrado de la cuenta existente
+
+La cuenta se renombró de `alex-portfolio` a `libreria-virtual`. alwaysdata trasladó la raíz web y renombró la base y su usuario. Después se actualizaron las cuatro variables de URL y base de datos indicadas arriba en el `.env` privado, se reconstruyeron las cachés de Laravel y se reinició el sitio desde el panel.
+
+MariaDB conservó el usuario anterior como `DEFINER` de las vistas, procedimientos y el disparador. Para restaurar el catálogo y los pedidos sin borrar los datos, se ejecutaron de nuevo los métodos `up()` de `2024_02_07_240000_unprepared_view.php`, `2026_10_19_000000_add_usuario_to_view_pedidos.php`, `2024_02_07_240000_unprepared_procedure.php` y `2024_02_07_240000_unprepared_trigger.php`, en ese orden. Sus definidores ahora son `libreria-virtual@%`. No vuelvas a sembrar la base existente por este cambio.
 
 El plan Free tiene 256 MB de RAM, ¼ CPU y 1 GB de espacio compartido entre archivos y base de datos. Mide el tiempo de carga real antes de usar el enlace en el portfolio.

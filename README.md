@@ -2,9 +2,7 @@
 
 Demo interactiva en Laravel para administrar libros y ejemplares, registrar pedidos y simular el seguimiento de envíos. Hay cuatro roles: administrador, cliente ocasional, cliente especializado y encargado de envíos. El catálogo público se puede explorar sin cuenta.
 
-**Demo pública:** [alex-portfolio.alwaysdata.net](https://alex-portfolio.alwaysdata.net/) · **Código:** [GitHub](https://github.com/AlexDeRivia/libreria-virtual).
-
-© 2026 Alex Alcantara. El código y diseño originales se publican con todos los derechos reservados; consulta [COPYRIGHT.md](COPYRIGHT.md). Las dependencias y componentes de terceros conservan sus propias licencias.
+**Demo pública:** [libreria-virtual.alwaysdata.net](https://libreria-virtual.alwaysdata.net/) · **Código:** [GitHub](https://github.com/AlexDeRivia/libreria-virtual).
 
 **La compra y el envío son simulados.** Confirmar un pedido calcula el costo de envío y crea un código de seguimiento interno; no cobra dinero ni se integra con un transportista. El botón «1 Clic» añade ejemplares al carrito. La demo no solicita ni guarda datos de tarjetas nuevas.
 
@@ -67,3 +65,5 @@ Usa `DB_PORT`, `DB_USERNAME` y `DB_PASSWORD` de esa instancia de pruebas cuando 
 El despliegue gratuito en alwaysdata se documenta en [docs/deploy-alwaysdata.md](docs/deploy-alwaysdata.md). Las imágenes heredadas y sin uso de `public/img/` se excluyen del repositorio y del despliegue hasta confirmar sus permisos.
 
 No hay integración de pagos, correo transaccional ni seguimiento externo de envíos. El proyecto original carecía de historial Git; esta recuperación conserva una copia de referencia local aparte.
+
+© 2026 Alex Alcantara · Librería Virtual. Todos los derechos reservados. Los componentes de terceros conservan sus propias licencias.
