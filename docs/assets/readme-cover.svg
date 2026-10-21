@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title description">
+  <title id="title">Librería Virtual</title>
+  <desc id="description">Ilustración de una estantería de libros junto al nombre de la demo de catálogo, pedidos y envíos.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#123e45"/>
+      <stop offset="1" stop-color="#102c35"/>
+    </linearGradient>
+    <filter id="card-shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="16" stdDeviation="17" flood-color="#031f24" flood-opacity=".25"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="420" rx="24" fill="url(#background)"/>
+  <path d="M0 343 C150 314 265 369 428 345 S680 317 760 352 L760 420 H0Z" fill="#1a5558" opacity=".3"/>
+  <circle cx="1090" cy="-55" r="246" fill="none" stroke="#8ccac0" stroke-opacity=".11" stroke-width="2"/>
+  <circle cx="1090" cy="-55" r="198" fill="none" stroke="#8ccac0" stroke-opacity=".11" stroke-width="2"/>
+
+  <g font-family="'Trebuchet MS', 'Segoe UI', sans-serif">
+    <text x="72" y="76" fill="#b7dad4" font-size="17" font-weight="700" letter-spacing="3">ALEX ALCANTARA  /  PORTFOLIO</text>
+    <rect x="72" y="96" width="52" height="5" rx="2.5" fill="#bb6048"/>
+    <text x="69" y="183" fill="#ffffff" font-size="75" font-weight="700" letter-spacing="-4">Librería</text>
+    <text x="69" y="260" fill="#ffffff" font-size="75" font-weight="700" letter-spacing="-4">Virtual</text>
+    <text x="73" y="307" fill="#d6eae6" font-size="22">Del catálogo al seguimiento de un pedido.</text>
+    <text x="73" y="367" fill="#a9d2cb" font-size="15" font-weight="700" letter-spacing="1.5">LARAVEL 12   ·   PHP 8.2+   ·   MYSQL / MARIADB</text>
+  </g>
+
+  <g transform="rotate(-2 900 215)" filter="url(#card-shadow)">
+    <rect x="653" y="70" width="485" height="302" rx="23" fill="#e8f3ef"/>
+    <rect x="677" y="141" width="77" height="198" rx="6" fill="#0c6970"/>
+    <rect x="761" y="179" width="77" height="160" rx="6" fill="#b3563e"/>
+    <rect x="845" y="119" width="81" height="220" rx="6" fill="#234f62"/>
+    <rect x="933" y="161" width="76" height="178" rx="6" fill="#60838b"/>
+    <rect x="1016" y="137" width="87" height="202" rx="6" fill="#8f4a37"/>
+    <path d="M682 332 H1106" stroke="#17464c" stroke-width="11" stroke-linecap="round"/>
+    <g fill="#ffffff" font-family="'Trebuchet MS', 'Segoe UI', sans-serif" font-size="21" font-weight="700" text-anchor="middle">
+      <text transform="translate(716 243) rotate(-90)">Descubre</text>
+      <text transform="translate(800 253) rotate(-90)">Elige</text>
+      <text transform="translate(885 229) rotate(-90)">Reserva</text>
+      <text transform="translate(970 250) rotate(-90)">Sigue</text>
+      <text transform="translate(1057 239) rotate(-90)">Disfruta</text>
+    </g>
+  </g>
+</svg>

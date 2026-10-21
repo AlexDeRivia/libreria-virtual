@@ -1,78 +1,142 @@
 # Librería Virtual
 
-Demo interactiva en Laravel para administrar libros y ejemplares, registrar pedidos y simular el seguimiento de envíos. Hay cuatro roles: administrador, cliente ocasional, cliente especializado y encargado de envíos. El catálogo público se puede explorar sin cuenta.
+[![Librería Virtual: del catálogo al seguimiento de un pedido](docs/assets/readme-cover.svg)](https://libreria-virtual.alwaysdata.net/)
 
-**Demo pública:** [libreria-virtual.alwaysdata.net](https://libreria-virtual.alwaysdata.net/) · **Código:** [GitHub](https://github.com/AlexDeRivia/libreria-virtual).
+**Una biblioteca que se puede recorrer de principio a fin.** Explora libros y ejemplares, arma un pedido, sigue su entrega y descubre cómo se administra todo desde el otro lado del mostrador. Es una aplicación Laravel recuperada y preparada como demo interactiva para portfolio.
 
-En la demo pública, «Explorar roles» permite entrar con un clic como cliente, cliente especializado, encargado de envíos o administrador. Se puede cambiar de rol dentro de cada panel. Hay un pedido de muestra listo para consultar y despachar. Todos comparten datos ficticios: los cambios se restablecen cada día. No introduzcas información personal real.
+**[Abrir la demo](https://libreria-virtual.alwaysdata.net/)** · **[Elegir un rol](https://libreria-virtual.alwaysdata.net/login)** · [Ver el despliegue](docs/deploy-alwaysdata.md)
 
-**La compra y el envío son simulados.** Confirmar un pedido calcula el costo de envío y crea un código de seguimiento interno; no cobra dinero ni se integra con un transportista. El botón «1 Clic» añade ejemplares al carrito. La demo no solicita ni guarda datos de tarjetas nuevas.
+`Laravel 12` · `PHP 8.2+` · `Blade` · `MySQL / MariaDB` · `Bootstrap`
 
-## Requisitos
+> La demo es pública y sus datos son compartidos. Usa solo información ficticia: los cambios se restablecen cada día. Los pedidos, pagos y envíos no representan transacciones reales.
 
-- PHP 8.2 o superior, con `pdo_mysql`, `mbstring`, `openssl`, `fileinfo` y las extensiones habituales de Laravel.
-- Composer 2.
-- MySQL 8.0.30 o MariaDB 11.8. Las migraciones crean vistas, procedimientos y un disparador, así que el usuario de instalación necesita esos permisos.
-- Un servidor PHP que sirva **solo** la carpeta `public/` como raíz web.
+## Qué puedes probar
 
-Las vistas usan los archivos CSS y JS incluidos en `public/dist`. Node y Vite no son necesarios para arrancar esta demo.
+1. **Explora el catálogo** sin iniciar sesión. Busca por título o autor y consulta los ejemplares disponibles.
+2. **Entra como cliente** desde «Explorar roles». Añade un ejemplar al carrito, ajusta la cantidad y confirma un pedido simulado. También encontrarás un pedido de muestra con seguimiento listo para consultar.
+3. **Cambia a envíos** para marcar un pedido «En camino», asignar una fecha estimada y registrar su entrega. Vuelve al cliente para ver el cambio en «Mis compras».
+4. **Cambia a administración** para revisar pedidos, libros, ejemplares, usuarios y catálogos auxiliares. Puedes crear o editar registros ficticios.
 
-## Instalación local desde una base vacía
+El selector permite cambiar de rol con un clic desde cada área, sin crear una cuenta ni conocer contraseñas.
 
-1. Crea una base MySQL exclusiva para la demo y un usuario con permisos para migraciones, vistas, procedimientos y disparadores. No importes la base antigua.
-2. En una copia limpia del proyecto, copia `.env.example` a `.env`. Si ya existe un `.env` antiguo, consérvalo aparte: no lo reutilices ni apuntes la demo a su base de datos. Configura `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD`. Define `DEMO_PASSWORD` con una contraseña privada de al menos 12 caracteres para las cuentas de ejemplo.
-3. Ejecuta:
+| Perspectiva | Lo que muestra |
+| --- | --- |
+| **Cliente** | Catálogo, carrito, confirmación, historial y seguimiento de pedidos. |
+| **Cliente especializado** | Catálogo filtrado por especialidades, preferencias y el mismo flujo de compra. |
+| **Envíos** | Pedidos por atender, despacho, fecha estimada y entrega simulada. |
+| **Administración** | Gestión de libros, ejemplares, autores y catálogos; consulta de usuarios y pedidos. |
 
-   ```powershell
+```mermaid
+flowchart LR
+    A["Catálogo público"] --> B["Selección de ejemplares"]
+    B --> C["Carrito y pedido simulado"]
+    C --> D["En preparación"]
+    D --> E["En camino"]
+    E --> F["Entregado"]
+    C -.-> G["Administración: consulta del pedido"]
+    D -.-> H["Cliente: historial y seguimiento"]
+    E -.-> H
+    F -.-> H
+```
+
+## Qué hay detrás
+
+- **Inventario coherente:** el carrito reserva unidades; las reservas abandonadas caducan a los 30 minutos y se liberan en la siguiente visita relevante.
+- **Seguimiento interno:** cada pedido confirmado recibe un código de demostración. El área de envíos controla las transiciones de preparación, tránsito y entrega.
+- **Cuatro áreas reales:** la entrada pública usa las mismas pantallas y operaciones de cada rol. El registro de cuentas se desactiva en este modo para que los visitantes no dejen datos personales en una base compartida.
+- **Datos recuperables:** una base exclusiva de demostración se vuelve a sembrar diariamente. El comando de restablecimiento comprueba el nombre exacto de la base y rechaza cuentas ajenas a las semillas previstas.
+- **Interfaz sin build obligatorio:** Blade, CSS y JavaScript ya están incluidos en `public/dist`; no necesitas Node para ejecutar la aplicación.
+
+### Tecnologías
+
+| Capa | Implementación |
+| --- | --- |
+| Servidor | PHP 8.2+, Laravel 12 |
+| Interfaz | Blade, Bootstrap, CSS y JavaScript propios |
+| Datos | MySQL; MariaDB 11.8 en la demo publicada |
+| Verificación | PHPUnit con pruebas de flujos y acceso por roles |
+| Hospedaje de la demo | alwaysdata, con tarea programada de restablecimiento |
+
+## Ejecutarlo en local
+
+Necesitas PHP 8.2+, Composer 2 y una **base MySQL o MariaDB vacía**. El usuario de la base debe poder crear tablas, vistas, procedimientos y disparadores. Se requieren `pdo_mysql`, `mbstring`, `openssl`, `fileinfo` y las extensiones habituales de Laravel. La raíz web debe apuntar únicamente a `public/`.
+
+1. Clona el repositorio e instala dependencias:
+
+   ```sh
+   git clone https://github.com/AlexDeRivia/libreria-virtual.git
+   cd libreria-virtual
    composer install
+   ```
+
+2. Copia `.env.example` como `.env`. Configura `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD` para esa base nueva. Deja `PUBLIC_DEMO_ACCESS=false` y define `DEMO_PASSWORD` con una clave privada de al menos 12 caracteres para las cuentas sembradas. Nunca subas `.env` al repositorio.
+
+3. Inicializa y abre la aplicación:
+
+   ```sh
    php artisan key:generate
    php artisan migrate --seed
    php artisan serve --host=127.0.0.1
    ```
 
-4. Abre `http://127.0.0.1:8000`. Las cuentas sembradas usan los correos `admin@example.test`, `cliente@example.test`, `especialista@example.test` y `envios@example.test`, con la contraseña que configuraste. Mantén privadas las credenciales de administrador y encargado. Los visitantes pueden crear una cuenta de cliente con **datos ficticios**.
+4. Visita [http://127.0.0.1:8000](http://127.0.0.1:8000). En el modo local privado, inicia sesión con cualquiera de las cuentas ficticias siguientes y la clave que elegiste en `DEMO_PASSWORD`:
 
-## Recorrido de la demo
+   | Rol | Correo |
+   | --- | --- |
+   | Administración | `admin@example.test` |
+   | Cliente | `cliente@example.test` |
+   | Cliente especializado | `especialista@example.test` |
+   | Envíos | `envios@example.test` |
 
-1. Entra en `/catalogo` para explorar y buscar sin iniciar sesión. El catálogo es de solo lectura.
-2. Regístrate como cliente con datos ficticios o ingresa con una cuenta de cliente sembrada. Añade ejemplares al carrito y confirma un pedido simulado. Las unidades del carrito quedan reservadas durante 30 minutos desde el último cambio; al vencer, se liberan en la siguiente visita al catálogo o al área de cliente.
-3. Consulta el historial y el detalle del pedido para ver su código de seguimiento interno y su estado. El administrador puede consultar los artículos y destinatario en el detalle del pedido.
-4. Ingresa como encargado de envíos. Marca el pedido «En camino» con una fecha estimada y luego «Entregado». El historial del cliente conserva el pedido entregado y muestra la fecha registrada.
-5. Entra como administrador para crear, editar y eliminar libros, ejemplares y catálogos auxiliares; consulta usuarios y pedidos. En la demo pública los visitantes comparten ese panel, por lo que el contenido se restablece diariamente.
+No ejecutes las migraciones ni las semillas sobre una base antigua o con datos que quieras conservar.
 
-`migrate --seed` se usa una vez sobre una base vacía. `migrate:fresh --seed` elimina los datos de la base seleccionada: úsalo únicamente para reiniciar una demo desechable.
+<details>
+<summary><strong>Configurar una demo pública propia</strong></summary>
 
-## Acceso público para portfolio
+Usa una base **nueva y desechable**. Antes de sembrarla, configura en su `.env` privado:
 
-Esta opción es **solo para una base exclusiva con datos ficticios**. Configura `PUBLIC_DEMO_ACCESS=true` en el `.env` privado de la instalación pública. El formulario de registro se desactiva en ese modo para que los visitantes no dejen datos personales visibles para otros; el recorrido de cliente se prueba con las cuentas sembradas. El acceso de un clic usa solicitudes POST con protección CSRF, límite de frecuencia y validación del correo y rol de cada cuenta sembrada. No publiques la contraseña privada inicial.
+```dotenv
+PUBLIC_DEMO_ACCESS=true
+DB_DATABASE=nombre_de_la_base_desechable
+DEMO_RESET_DATABASE=nombre_de_la_base_desechable
+```
 
-Los visitantes pueden modificar el catálogo y los pedidos. Configura `DEMO_RESET_DATABASE` con el mismo valor exacto de `DB_DATABASE` y programa `php artisan demo:reset` una vez al día. El comando se niega a borrar una base diferente o que contenga cuentas distintas de las cinco cuentas sembradas. El restablecimiento borra los cambios y genera contraseñas aleatorias nuevas para las cuentas ficticias; el acceso público continúa funcionando. Comprueba antes que no haya datos que debas conservar. El procedimiento de alwaysdata está en [docs/deploy-alwaysdata.md](docs/deploy-alwaysdata.md).
+En este modo, las cuentas ficticias reciben contraseñas aleatorias, aparece el acceso de un clic y se crea un pedido de muestra. `DEMO_PASSWORD` solo hace falta para sembrar en modo privado. Programa `php artisan demo:reset` para limpiar los cambios de los visitantes; **ese comando elimina y recrea las tablas de la base autorizada**. Se detiene si la base configurada no coincide o encuentra cuentas fuera de las cinco semillas previstas. El procedimiento completo está en [la guía de alwaysdata](docs/deploy-alwaysdata.md).
 
-## Pruebas
+</details>
 
-Las pruebas de integración se niegan a usar otra base que no sea `libreria_virtual_test` en MySQL local. Créala por separado y configura la conexión mediante variables de entorno antes de ejecutar:
+<details>
+<summary><strong>Ejecutar las pruebas</strong></summary>
+
+La suite de integración exige una base local separada llamada exactamente `libreria_virtual_test`, con `DB_HOST=127.0.0.1` o `localhost`. Configura en `.env` las credenciales de esa instancia y una `DEMO_PASSWORD` privada. Después, en PowerShell:
 
 ```powershell
-$env:APP_ENV = "testing"
 $env:DB_HOST = "127.0.0.1"
 $env:DB_DATABASE = "libreria_virtual_test"
-$env:DEMO_PASSWORD = "<contraseña privada de 12+ caracteres>"
 php artisan migrate --seed --force
 php artisan test
 ```
 
-Usa `DB_PORT`, `DB_USERNAME` y `DB_PASSWORD` de esa instancia de pruebas cuando difieran de tu `.env`. Los tests usan transacciones; el esquema y las semillas deben existir antes de correrlos.
+En Bash, usa `export DB_HOST=127.0.0.1 DB_DATABASE=libreria_virtual_test` antes de los dos comandos `php artisan`. Las pruebas usan transacciones, por eso necesitan el esquema y las semillas antes de empezar. El guard de la suite impide ejecutarlas contra otra base. Las pruebas relevantes están en [`tests/Feature`](tests/Feature).
 
-## Antes de desplegar
+</details>
 
-- Configura una base nueva y privada. No copies el `.env`, los logs, las sesiones ni datos de tarjetas del proyecto antiguo. Los bocetos SQL de `database/` no forman parte de la instalación.
-- Usa un `APP_KEY` nuevo, `APP_ENV=production`, `APP_DEBUG=false`, la URL HTTPS real, `SESSION_SECURE_COOKIE=true` y un almacén de caché persistente para limitar intentos de acceso. Asegura escritura en `storage/` y `bootstrap/cache/`.
-- Instala desde `composer.lock` y ejecuta `composer audit --locked` antes de publicar. En un servidor de producción usa `composer install --no-dev --optimize-autoloader`.
-- Sirve exclusivamente `public/`. Si activas el acceso público por rol, usa una base desechable y programa el restablecimiento diario. Las reservas abandonadas se liberan al recibir una visita posterior.
-- Confirma la autoría y permisos de uso de las imágenes y archivos de terceros incluidos en `public/` antes de mostrarlos públicamente.
+## Estructura del proyecto
 
-El despliegue gratuito en alwaysdata se documenta en [docs/deploy-alwaysdata.md](docs/deploy-alwaysdata.md). Las imágenes heredadas y sin uso de `public/img/` se excluyen del repositorio y del despliegue hasta confirmar sus permisos.
+| Ruta | Contenido |
+| --- | --- |
+| [`app/Http/Controllers`](app/Http/Controllers) | Flujos de catálogo, clientes, envíos y administración. |
+| [`app/Services`](app/Services) | Caducidad de reservas y seguimiento simulado. |
+| [`database/migrations`](database/migrations) y [`database/seeders`](database/seeders) | Esquema, vistas, procedimientos y datos ficticios. |
+| [`resources/views`](resources/views) y [`public/dist`](public/dist) | Pantallas y recursos de la interfaz. |
+| [`tests/Feature`](tests/Feature) | Pruebas de recuperación, pedidos, envíos y acceso público. |
 
-No hay integración de pagos, correo transaccional ni seguimiento externo de envíos. El proyecto original carecía de historial Git; esta recuperación conserva una copia de referencia local aparte.
+El criterio visual se documenta en [docs/frontend-design.md](docs/frontend-design.md). La instalación publicada y su restablecimiento diario se explican en [docs/deploy-alwaysdata.md](docs/deploy-alwaysdata.md).
 
-© 2026 Alex Alcantara · Librería Virtual. Todos los derechos reservados. Los componentes de terceros conservan sus propias licencias.
+## Alcance de la simulación
+
+No hay cobros, correo transaccional ni conexión con un transportista. El código de seguimiento y los cambios de estado pertenecen solo a la aplicación. La demo pública permite modificar datos ficticios, por lo que lo que veas puede variar hasta el siguiente restablecimiento. Las cubiertas son representaciones gráficas; no se publican portadas heredadas sin permisos comprobados.
+
+---
+
+© 2026 Alex Alcantara · Librería Virtual. Todos los derechos reservados sobre el código y diseño originales. Los componentes de terceros conservan sus propias licencias.

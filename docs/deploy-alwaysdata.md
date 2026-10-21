@@ -32,16 +32,12 @@ PUBLIC_DEMO_ACCESS=true
 DEMO_RESET_DATABASE=libreria-virtual_portfolio_demo
 ```
 
-Genera `APP_KEY` con `php artisan key:generate`. Para la siembra inicial, pasa `DEMO_PASSWORD` como variable temporal del proceso y retírala de la sesión al terminar. No la guardes en el `.env` ni en el historial de comandos. No publiques ni compartas el `.env`.
+Genera `APP_KEY` con `php artisan key:generate`. En modo público, las cuentas ficticias reciben contraseñas aleatorias automáticamente: `DEMO_PASSWORD` no es necesario. No publiques ni compartas el `.env`.
 
 ## Inicialización y comprobación
 
 ```sh
-php artisan migrate --force
-# Ejecuta la siembra una sola vez con una clave de 12+ caracteres.
-read -r -s -p 'Clave demo: ' demo_pass
-DEMO_PASSWORD="$demo_pass" php artisan db:seed --force
-unset demo_pass
+php artisan migrate --seed --force
 php artisan optimize:clear
 php artisan config:cache
 php artisan view:cache
