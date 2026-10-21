@@ -19,6 +19,7 @@ use App\Http\Controllers\Encargado\HomeController as EncargadoHomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DemoAccessController;
 use App\Http\Middleware\Rol\Admin;
 use App\Http\Middleware\Rol\Cliente;
 use App\Http\Middleware\Rol\Encargado;
@@ -39,6 +40,8 @@ Route::view('/', 'app.home')->name('home');
 Route::view('/nosotros', 'app.nosotros')->name('nosotros');
 Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
 Route::get('/catalogo/{id}', [CatalogoController::class, 'show'])->name('catalogo.show');
+Route::post('/demo/entrar/{role}', [DemoAccessController::class, 'enter'])
+    ->middleware('throttle:12,1')->name('demo.enter');
 
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'mostrarFormulario')->name('login');

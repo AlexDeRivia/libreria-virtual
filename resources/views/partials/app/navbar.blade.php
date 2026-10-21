@@ -10,8 +10,12 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}" @if(request()->routeIs('home')) aria-current="page" @endif>Inicio</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('catalogo.*') ? 'active' : '' }}" href="{{ route('catalogo.index') }}" @if(request()->routeIs('catalogo.*')) aria-current="page" @endif>Catálogo</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('nosotros') ? 'active' : '' }}" href="{{ route('nosotros') }}" @if(request()->routeIs('nosotros')) aria-current="page" @endif>Acerca de la demo</a></li>
-                <li class="nav-item"><a class="nav-link nav-quiet" href="{{ route('login') }}">Ingresar</a></li>
-                <li class="nav-item"><a class="nav-link nav-action" href="{{ route('register') }}">Crear cuenta</a></li>
+                @if (config('demo.public_access'))
+                    <li class="nav-item"><a class="nav-link nav-action" href="{{ route('login') }}">Explorar roles</a></li>
+                @else
+                    <li class="nav-item"><a class="nav-link nav-quiet" href="{{ route('login') }}">Ingresar</a></li>
+                    <li class="nav-item"><a class="nav-link nav-action" href="{{ route('register') }}">Crear cuenta</a></li>
+                @endif
             </ul>
         </div>
     </div>

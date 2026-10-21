@@ -37,6 +37,8 @@
 
 <header class="admin-page-heading"><div class="container"><p class="eyebrow mb-1">Administración</p><h1>@yield('title')</h1></div></header>
 
+@if (config('demo.public_access'))<div class="container">@include('partials.shared.demo-roles', ['compact' => true])</div>@endif
+
 @yield('content')
 
 </main>

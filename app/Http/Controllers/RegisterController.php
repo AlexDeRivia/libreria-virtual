@@ -14,6 +14,10 @@ class RegisterController extends Controller
 {
     public function mostrarFormulario()
     {
+        if (config('demo.public_access')) {
+            return redirect(route('home').'#explorar-demo');
+        }
+
         $paises = Pais::all();
         return view('app.register', compact('paises'));
     }
@@ -33,6 +37,8 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(config('demo.public_access'), 403);
+
         $data = $request->validate([
             'email' => 'required|email|unique:usuarios,email',
             'password' => 'required|string|min:8',

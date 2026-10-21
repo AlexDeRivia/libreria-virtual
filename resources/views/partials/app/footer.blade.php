@@ -11,7 +11,7 @@
                     <li><a href="{{ route('catalogo.index') }}">Ver el catálogo</a></li>
                     <li><a href="{{ route('nosotros') }}">Cómo funciona la demo</a></li>
                     <li><a href="{{ route('login') }}">Ingresar</a></li>
-                    <li><a href="{{ route('register') }}">Crear cuenta de demostración</a></li>
+                    @if (!config('demo.public_access'))<li><a href="{{ route('register') }}">Crear cuenta de demostración</a></li>@endif
                 </ul>
             </div>
         </div>

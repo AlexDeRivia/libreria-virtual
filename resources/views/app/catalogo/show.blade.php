@@ -17,7 +17,7 @@
                 <div><dt>Disponibles</dt><dd>{{ $ejemplar->stock }}</dd></div>
                 <div><dt>Precio simulado</dt><dd>S/ {{ number_format($ejemplar->precio, 2) }}</dd></div>
             </dl>
-            <div class="action-panel"><p class="mb-3">Crea una cuenta de cliente con datos ficticios para añadir este ejemplar a tu pedido.</p><a class="btn btn-primary" href="{{ route('register') }}">Crear cuenta de demostración</a></div>
+            <div class="action-panel"><p class="mb-3">{{ config('demo.public_access') ? 'Entra como cliente para añadir este ejemplar a tu pedido de demostración.' : 'Crea una cuenta de cliente con datos ficticios para añadir este ejemplar a tu pedido.' }}</p><a class="btn btn-primary" href="{{ config('demo.public_access') ? route('login') : route('register') }}">{{ config('demo.public_access') ? 'Elegir un rol' : 'Crear cuenta de demostración' }}</a></div>
         </div>
     </article>
 </div>

@@ -28,6 +28,8 @@ CACHE_DRIVER=file
 SESSION_DRIVER=file
 QUEUE_CONNECTION=sync
 MAIL_MAILER=log
+PUBLIC_DEMO_ACCESS=true
+DEMO_RESET_DATABASE=libreria-virtual_libreria_virtual
 ```
 
 Genera `APP_KEY` con `php artisan key:generate`. Para la siembra inicial, pasa `DEMO_PASSWORD` como variable temporal del proceso y retírala de la sesión al terminar. No la guardes en el `.env` ni en el historial de comandos. No publiques ni compartas el `.env`.
@@ -45,7 +47,9 @@ php artisan config:cache
 php artisan view:cache
 ```
 
-Comprueba `/`, `/catalogo`, registro de cliente, carrito, confirmación de pedido y seguimiento; entra a los roles internos solo con credenciales privadas. La demo permite que visitantes creen datos ficticios. Reinicia o limpia los pedidos de la demo de forma deliberada si se acumulan; nunca ejecutes `migrate:fresh` sobre una base con datos que debas conservar.
+Comprueba `/`, `/catalogo`, el acceso de un clic a cada rol, carrito, confirmación de pedido y seguimiento. En el modo público el registro queda desactivado y el panel de administrador es compartido; usa solo datos ficticios. `demo:reset` borra los cambios en la base desechable indicada por `DEMO_RESET_DATABASE` y falla si detecta cuentas ajenas a las cinco sembradas. Comprueba las cuentas antes de ejecutarlo por primera vez.
+
+En **Avanzado > Tareas programadas** de alwaysdata, crea una tarea de tipo **Comando**, con `php /home/libreria-virtual/libreria-virtual/artisan demo:reset`, frecuencia diaria en una hora de poco tráfico (por ejemplo 09:00 UTC, 04:00 de Lima). Comprueba que el primer registro de ejecución termine correctamente en los logs de la tarea. alwaysdata admite comandos y horarios diarios en ese panel: [documentación oficial](https://help.alwaysdata.com/en/docs/web-hosting/tasks/). Si el restablecimiento falla, revisa el log; no vuelvas a sembrar a mano la base existente.
 
 ## Renombrado de la cuenta existente
 

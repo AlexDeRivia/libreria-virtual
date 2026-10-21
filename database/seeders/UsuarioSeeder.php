@@ -5,12 +5,13 @@ namespace Database\Seeders;
 use App\Models\Usuario;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UsuarioSeeder extends Seeder
 {
     public function run(): void
     {
-        $password = env('DEMO_PASSWORD');
+        $password = config('demo.public_access') ? Str::random(48) : env('DEMO_PASSWORD');
         if (! is_string($password) || strlen($password) < 12) {
             throw new \RuntimeException('DEMO_PASSWORD debe tener al menos 12 caracteres para cargar usuarios de demostración.');
         }

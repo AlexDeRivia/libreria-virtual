@@ -18,7 +18,7 @@
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 @include('partials.encargado.navbar')
 
-<main id="contenido">@yield('content')</main>
+<main id="contenido">@if (config('demo.public_access'))<div class="container">@include('partials.shared.demo-roles', ['compact' => true])</div>@endif @yield('content')</main>
 
 @include('partials.encargado.footer')
 

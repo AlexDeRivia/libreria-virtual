@@ -2,7 +2,10 @@
 @section('title', 'Ingresar · Librería Virtual')
 @section('content')
 <div class="container auth-shell">
-    <div class="page-heading"><div><p class="eyebrow mb-2">Tu cuenta</p><h1>Ingresa a tu biblioteca</h1><p>Continúa tu pedido o revisa el seguimiento de tus compras simuladas.</p></div></div>
+    <div class="page-heading"><div><p class="eyebrow mb-2">Tu cuenta</p><h1>{{ config('demo.public_access') ? 'Elige cómo explorar la demo' : 'Ingresa a tu biblioteca' }}</h1><p>{{ config('demo.public_access') ? 'Prueba cada área de la aplicación sin crear una cuenta.' : 'Continúa tu pedido o revisa el seguimiento de tus compras simuladas.' }}</p></div></div>
+    @if (config('demo.public_access'))
+        @include('partials.shared.demo-roles')
+    @else
     <div class="card">
         <div class="card-body">
             @if ($errors->has('correo'))<div class="alert alert-danger" role="alert" aria-live="polite">{{ $errors->first('correo') }}</div>@endif
@@ -16,6 +19,7 @@
         </div>
         <div class="card-footer text-center">¿Aún no tienes cuenta? <a href="{{ route('register') }}">Crea una cuenta de demostración</a></div>
     </div>
+    @endif
 </div>
 <script>
 document.getElementById('togglePassword')?.addEventListener('click', function () {

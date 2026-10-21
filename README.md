@@ -4,6 +4,8 @@ Demo interactiva en Laravel para administrar libros y ejemplares, registrar pedi
 
 **Demo pública:** [libreria-virtual.alwaysdata.net](https://libreria-virtual.alwaysdata.net/) · **Código:** [GitHub](https://github.com/AlexDeRivia/libreria-virtual).
 
+En la demo pública, «Explorar roles» permite entrar con un clic como cliente, cliente especializado, encargado de envíos o administrador. Se puede cambiar de rol dentro de cada panel. Todos comparten datos ficticios: los cambios se restablecen cada día. No introduzcas información personal real.
+
 **La compra y el envío son simulados.** Confirmar un pedido calcula el costo de envío y crea un código de seguimiento interno; no cobra dinero ni se integra con un transportista. El botón «1 Clic» añade ejemplares al carrito. La demo no solicita ni guarda datos de tarjetas nuevas.
 
 ## Requisitos
@@ -36,8 +38,15 @@ Las vistas usan los archivos CSS y JS incluidos en `public/dist`. Node y Vite no
 2. Regístrate como cliente con datos ficticios o ingresa con una cuenta de cliente sembrada. Añade ejemplares al carrito y confirma un pedido simulado. Las unidades del carrito quedan reservadas durante 30 minutos desde el último cambio; al vencer, se liberan en la siguiente visita al catálogo o al área de cliente.
 3. Consulta el historial y el detalle del pedido para ver su código de seguimiento interno y su estado. El administrador puede consultar los artículos y destinatario en el detalle del pedido.
 4. Ingresa como encargado de envíos. Marca el pedido «En camino» con una fecha estimada y luego «Entregado». El historial del cliente conserva el pedido entregado y muestra la fecha registrada.
+5. Entra como administrador para crear, editar y eliminar libros, ejemplares y catálogos auxiliares; consulta usuarios y pedidos. En la demo pública los visitantes comparten ese panel, por lo que el contenido se restablece diariamente.
 
 `migrate --seed` se usa una vez sobre una base vacía. `migrate:fresh --seed` elimina los datos de la base seleccionada: úsalo únicamente para reiniciar una demo desechable.
+
+## Acceso público para portfolio
+
+Esta opción es **solo para una base exclusiva con datos ficticios**. Configura `PUBLIC_DEMO_ACCESS=true` en el `.env` privado de la instalación pública. El formulario de registro se desactiva en ese modo para que los visitantes no dejen datos personales visibles para otros; el recorrido de cliente se prueba con las cuentas sembradas. El acceso de un clic usa solicitudes POST con protección CSRF, límite de frecuencia y validación del correo y rol de cada cuenta sembrada. No publiques la contraseña privada inicial.
+
+Los visitantes pueden modificar el catálogo y los pedidos. Configura `DEMO_RESET_DATABASE` con el mismo valor exacto de `DB_DATABASE` y programa `php artisan demo:reset` una vez al día. El comando se niega a borrar una base diferente o que contenga cuentas distintas de las cinco cuentas sembradas. El restablecimiento borra los cambios y genera contraseñas aleatorias nuevas para las cuentas ficticias; el acceso público continúa funcionando. Comprueba antes que no haya datos que debas conservar. El procedimiento de alwaysdata está en [docs/deploy-alwaysdata.md](docs/deploy-alwaysdata.md).
 
 ## Pruebas
 
@@ -59,7 +68,7 @@ Usa `DB_PORT`, `DB_USERNAME` y `DB_PASSWORD` de esa instancia de pruebas cuando 
 - Configura una base nueva y privada. No copies el `.env`, los logs, las sesiones ni datos de tarjetas del proyecto antiguo. Los bocetos SQL de `database/` no forman parte de la instalación.
 - Usa un `APP_KEY` nuevo, `APP_ENV=production`, `APP_DEBUG=false`, la URL HTTPS real, `SESSION_SECURE_COOKIE=true` y un almacén de caché persistente para limitar intentos de acceso. Asegura escritura en `storage/` y `bootstrap/cache/`.
 - Instala desde `composer.lock` y ejecuta `composer audit --locked` antes de publicar. En un servidor de producción usa `composer install --no-dev --optimize-autoloader`.
-- Sirve exclusivamente `public/`. Mantén privadas las credenciales de los roles internos y decide cómo restablecer los pedidos confirmados de la demo si otras personas pueden crearlos. Las reservas abandonadas se liberan al recibir una visita posterior; no se requiere un cron para esta demo.
+- Sirve exclusivamente `public/`. Si activas el acceso público por rol, usa una base desechable y programa el restablecimiento diario. Las reservas abandonadas se liberan al recibir una visita posterior.
 - Confirma la autoría y permisos de uso de las imágenes y archivos de terceros incluidos en `public/` antes de mostrarlos públicamente.
 
 El despliegue gratuito en alwaysdata se documenta en [docs/deploy-alwaysdata.md](docs/deploy-alwaysdata.md). Las imágenes heredadas y sin uso de `public/img/` se excluyen del repositorio y del despliegue hasta confirmar sus permisos.
